@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1613960568 source:c:\workspace\playground\hello-world\main.cpp
+	<iostream>
+	"Person.h"
+
+1613962781 source:c:\workspace\playground\hello-world\person.cpp
+	"Person.h"
+	<iostream>
+
+1613969678 c:\workspace\playground\hello-world\person.h
+	<iostream>
+
