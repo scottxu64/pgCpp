@@ -2,24 +2,26 @@
 #define PERSON_H
 #include <iostream>
 
+using namespace std;
+
 class Person
 {
-public:
-    Person();
-    ~Person(); // deconstructor
+    public:
+        Person();
+        ~Person(); // deconstructor
 
-    std::string getName();
-    void setName(std::string name);
+        void setName(string name);
+        string getName();
 
-    void methodForConstObj() const;
+        // constant
+        void methodForConstObj() const;
 
-    Person(std::string name, std::string nameConst);
-    std::string getNameConst();
+        Person(string name, string nameConst);
+        string getNameConst();
 
-private:
-    std::string _name;
-
-    const std::string _nameConst;
+    private:
+        string _name;
+        const string _nameConst;
 };
 
 #endif // PERSON_H

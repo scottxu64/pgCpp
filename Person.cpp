@@ -13,13 +13,13 @@ Person::~Person()
     cout << "person deconstructor" << endl;
 }
 
-std::string Person::getName()
+void Person::setName(string name)
 {
-    return Person::_name;
+    _name = name;
 }
-void Person::setName(std::string name)
+string Person::getName()
 {
-    Person::_name = name;
+    return _name;
 }
 
 void Person::methodForConstObj() const
@@ -27,12 +27,11 @@ void Person::methodForConstObj() const
     cout << "const method for const object" << endl;
 }
 
-Person::Person(std::string name, std::string nameConst)
+Person::Person(string name, string nameConst)
     : _name(name), _nameConst(nameConst) // "member initializer syntax" to assign values to const members (aka global variables aka field)
-{
-}
+{}
 
-std::string Person::getNameConst()
+string Person::getNameConst()
 {
-    return Person::_nameConst;
+    return _nameConst;
 }

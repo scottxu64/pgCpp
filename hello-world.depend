@@ -1,12 +1,30 @@
 # depslib dependency file v1.0
-1614129527 source:c:\workspace\playground\hello-world\main.cpp
+1614567078 source:c:\workspace\playground\hello-world\main.cpp
+	<iostream>
+	"Person.h"
+	"Address.h"
+
+1614574214 source:c:\workspace\playground\hello-world\person.cpp
+	"Person.h"
+	<iostream>
+
+1614574214 c:\workspace\playground\hello-world\person.h
+	<iostream>
+
+1614566582 c:\workspace\playground\hello-world\address.h
+	<iostream>
+
+1614566582 source:c:\workspace\playground\hello-world\address.cpp
+	"Address.h"
+	<iostream>
+	<string>
+
+1614574251 source:c:\workspace\playground\hello-world\team.cpp
+	"Team.h"
 	<iostream>
 	"Person.h"
 
-1614130303 source:c:\workspace\playground\hello-world\person.cpp
+1614574619 c:\workspace\playground\hello-world\team.h
 	"Person.h"
-	<iostream>
-
-1614130303 c:\workspace\playground\hello-world\person.h
 	<iostream>
 

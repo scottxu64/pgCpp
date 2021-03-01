@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Person.h"
+#include "Team.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ void pgPointer()
     pArr0 = pArr0 + 2;                           // pointer doesn't do math +2, but move pointer by +2
     cout << pArr0 << endl;                       // 0x63fd68, same as pArr2
 }
+
 
 // class
 class Book
@@ -116,6 +118,7 @@ void pgExtension()
     cout << stemBook.getGenre() << endl;
 }
 
+
 // global vs local variables
 int sameVarName = 100;
 
@@ -126,13 +129,14 @@ void pgVariableScopes()
     cout << sameVarName << endl;   // this is using local variable
 }
 
-// default vaule
+// default value
 void pgDefaultValue(int a = 100, int b = 200, int c = 300)
 {
     cout << "a " << a << endl;
     cout << "b " << b << endl;
     cout << "c " << c << endl;
 }
+
 
 // pass value by reference and/or value
 int x = 100;
@@ -154,6 +158,17 @@ void passObjByRef(Person *pPerson)
     pPerson->setName("name set by ref"); // must use arrow selector when using reference
 }
 
+void pgPassByValueAndReference(){
+    Person person;
+    person.setName("person name");
+    cout << "before by value: " << person.getName() << endl;        // "person name"
+    passObjByValue(person);
+    cout << "after by value: " << person.getName() << endl;         // "person name"; objects passed by val is also a new copy! so getName is reading from old object.
+    passObjByRef(&person);
+    cout << "after by ref: " << person.getName() << endl;           // "name set by ref"
+}
+
+
 // constant
 void pgConstKeyword()
 {
@@ -168,6 +183,17 @@ void pgConstKeyword()
     Person person("reg name", "const name");
     cout << person.getNameConst() << endl; // "const name"
 }
+
+
+// composition
+void pgComposition(){
+    Person leader;
+    leader.setName("the leader");
+
+    Team team("my team", leader);
+    cout << team.getName() + ", Leader is: " + team.getLeader().getName() << endl;
+}
+
 
 int main()
 {
@@ -190,15 +216,11 @@ int main()
     //    cout << x << endl;      // 100
     //    cout << y << endl;      // 201
 
-    //    Person person;
-    //    person.setName("person name");
-    //    cout << "before by value: " << person.getName() << endl;        // "person name"
-    //    passObjByValue(person);
-    //    cout << "after by value: " << person.getName() << endl;         // "person name"; objects passed by val is also a new copy! so getName is reading from old object.
-    //    passObjByRef(&person);
-    //    cout << "after by ref: " << person.getName() << endl;           // "name set by ref"
+//    pgPassByValueAndReference();
 
-    pgConstKeyword();
+//    pgConstKeyword();
+
+    pgComposition();
 
     return 0;
 }
