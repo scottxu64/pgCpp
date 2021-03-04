@@ -14,7 +14,7 @@ class Team
 
     private:
         string _name;
-        Person _leader; // when composition has person object, it must be initialized in constructor
+        Person _leader; // when composition has object member, it must be initialized in constructor, in other words, this class can't have empty constructor
 };
 
 #endif // TEAM_H

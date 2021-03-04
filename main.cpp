@@ -195,6 +195,29 @@ void pgComposition(){
 }
 
 
+// friend keyword: a friend can have access to every member, method in a class, even private ones
+class Aclass{
+
+public:
+    Aclass(string aString){
+        _aString = aString;
+    }
+private:
+    string _aString;
+
+friend string aFriend(Aclass &aclass);      // step1: in class put a friend method stub
+};
+
+string aFriend(Aclass &aclass){             // step2: implement friend method
+    return aclass._aString;
+}
+
+void pgFriend(){
+    Aclass aclass("hello");
+    cout << aFriend(aclass) << endl;        // step3: use the friend method to access class
+}
+
+
 int main()
 {
     //    pgPointer();
@@ -220,7 +243,9 @@ int main()
 
 //    pgConstKeyword();
 
-    pgComposition();
+//    pgComposition();
+
+    pgFriend();
 
     return 0;
 }
