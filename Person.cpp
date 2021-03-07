@@ -42,3 +42,14 @@ string Person::getNameConst()
 {
     return _nameConst;
 }
+
+// operator overloading
+Person::Person(int __asset){
+    asset = __asset;
+}
+
+Person Person::operator+(Person oldPerson){
+    Person newPerson;
+    newPerson.asset = asset + oldPerson.asset;
+    return newPerson;
+}

@@ -227,6 +227,12 @@ void pgThisKeyword(){
     cout << person.getNameUsingThisDeRef() << endl;
 }
 
+void pgOperatorOverloading(){
+    Person oldPerson(100);
+    Person newPerson(200);
+    Person person  = newPerson + oldPerson;     // result from object operation directly
+    cout << person.asset << endl;
+}
 
 int main()
 {
@@ -257,6 +263,9 @@ int main()
 
 //    pgFriendKeyword();
 
-    pgThisKeyword();
+//    pgThisKeyword();
+
+    pgOperatorOverloading();
+
     return 0;
 }
