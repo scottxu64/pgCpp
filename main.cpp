@@ -212,9 +212,19 @@ string aFriend(Aclass &aclass){             // step2: implement friend method
     return aclass._aString;
 }
 
-void pgFriend(){
+void pgFriendKeyword(){
     Aclass aclass("hello");
     cout << aFriend(aclass) << endl;        // step3: use the friend method to access class
+}
+
+
+void pgThisKeyword(){
+    Person person;
+    person.setName("person name");
+
+    cout << person.getName() << endl;
+    cout << person.getNameUsingThisRef() << endl;
+    cout << person.getNameUsingThisDeRef() << endl;
 }
 
 
@@ -245,7 +255,8 @@ int main()
 
 //    pgComposition();
 
-    pgFriend();
+//    pgFriendKeyword();
 
+    pgThisKeyword();
     return 0;
 }

@@ -17,11 +17,18 @@ void Person::setName(string name)
 {
     _name = name;
 }
-string Person::getName()
-{
+
+string Person::getName(){
     return _name;
 }
+string Person::getNameUsingThisRef(){
+    return this->_name;     // this is a pointer to current object
+}
+string Person::getNameUsingThisDeRef(){
+    return (*this)._name;
+}
 
+// constant
 void Person::methodForConstObj() const
 {
     cout << "const method for const object" << endl;

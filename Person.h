@@ -12,6 +12,9 @@ class Person
 
         void setName(string name);
         string getName();
+        string getNameUsingThisRef();
+        string getNameUsingThisDeRef();
+
 
         // constant
         void methodForConstObj() const;
