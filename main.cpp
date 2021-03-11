@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Person.h"
 #include "Team.h"
+#include "Chef.h"
+#include "Driver.h"
 
 using namespace std;
 
@@ -100,7 +102,7 @@ void pgClass()
 
 // extends class
 class StemBook : public Book
-{ // must have this public keyword for accessibility
+{ // must have this public keyword for accessibility; extend class can have access to protected and public members and methods, not private ones
 public:
     string technology;
 
@@ -234,6 +236,22 @@ void pgOperatorOverloading(){
     cout << person.asset << endl;
 }
 
+void pgPolyMorphism(){
+    Chef chef(100);
+    chef.setName("chole");
+    Driver driver;
+    driver.setName("donald");
+
+    Person *pChef = &chef;              // upcast. declared as Person but assigned with Chef object.
+    Person *pDriver = &driver;
+
+    cout << "my name is: " << pChef->getName()
+         << ", my job is: " << ((Chef*)pChef) ->getCareer()     // downcast from Person to Chef, notice we are casting a pointer, so a * in caster
+         << ", my asset is: " << to_string(pChef->asset)        // get members just like get functions
+         << endl;
+}
+
+
 int main()
 {
     //    pgPointer();
@@ -265,7 +283,9 @@ int main()
 
 //    pgThisKeyword();
 
-    pgOperatorOverloading();
+//    pgOperatorOverloading();
+
+    pgPolyMorphism();
 
     return 0;
 }
