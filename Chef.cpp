@@ -1,12 +1,13 @@
 #include "Chef.h"
-#include "Person.h"
+#include "Worker.h"
 #include <iostream>
 
 using namespace std;
 
-Chef::Chef(int asset):Person(asset){        // call super constructor with parameters sample, not super()
+Chef::Chef(string name)
+    :Worker(name){        // like initializer syntax to call parent constructor
 }
 
-string Chef::getCareer(){
+string Chef::getCareer(){   // step3: implement function
     return "chef";
 }

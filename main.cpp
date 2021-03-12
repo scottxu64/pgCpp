@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Person.h"
 #include "Team.h"
+
+#include "Worker.h"
 #include "Chef.h"
 #include "Driver.h"
 
@@ -237,19 +239,20 @@ void pgOperatorOverloading(){
 }
 
 void pgPolyMorphism(){
-    Chef chef(100);
-    chef.setName("chole");
-    Driver driver;
-    driver.setName("donald");
-
-    Person *pChef = &chef;              // upcast. declared as Person but assigned with Chef object.
-    Person *pDriver = &driver;
-
+    Chef chef("Chloe");
+    Worker *pChef = &chef;
     cout << "my name is: " << pChef->getName()
-         << ", my job is: " << ((Chef*)pChef) ->getCareer()     // downcast from Person to Chef, notice we are casting a pointer, so a * in caster
-         << ", my asset is: " << to_string(pChef->asset)        // get members just like get functions
+         << ", my job is: " << pChef->getCareer()
+         << endl;
+
+    Driver driver("David");
+    Worker *pDriver = &driver;
+    cout << "my name is: " << pDriver->getName()
+         << ", my job is: " << pDriver->getCareer()
          << endl;
 }
+
+
 
 
 int main()

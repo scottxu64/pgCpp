@@ -1,14 +1,14 @@
 #ifndef CHEF_H
 #define CHEF_H
-#include "Person.h"
+#include "Worker.h"
 #include <iostream>
 
 using namespace std;
 
-class Chef: public Person
+class Chef: public Worker
 {
     public:
-        Chef(int);
+        Chef(string);
 
         string getCareer();
 };

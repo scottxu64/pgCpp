@@ -26,9 +26,6 @@ class Person
         Person(int);                // TODO: seems I don't need a var name here...
         Person operator+(Person);   // naming rule: start with 'operator', then what to overloading: '+'
 
-        // polymorphism
-        string getCareer();
-
     private:
         string _name;
         const string _nameConst;
