@@ -8,6 +8,6 @@ Chef::Chef(string name)
     :Worker(name){        // like initializer syntax to call parent constructor
 }
 
-string Chef::getCareer(){   // step3: implement function
+string Chef::getCareer(){   // step3: implement function as usual
     return "chef";
 }

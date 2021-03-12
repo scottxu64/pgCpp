@@ -240,7 +240,7 @@ void pgOperatorOverloading(){
 
 void pgPolyMorphism(){
     Chef chef("Chloe");
-    Worker *pChef = &chef;
+    Worker *pChef = &chef;                          // upcast
     cout << "my name is: " << pChef->getName()
          << ", my job is: " << pChef->getCareer()
          << endl;
@@ -250,6 +250,8 @@ void pgPolyMorphism(){
     cout << "my name is: " << pDriver->getName()
          << ", my job is: " << pDriver->getCareer()
          << endl;
+
+     cout << ((Chef*)pDriver)->getCareer() << endl;     // downcast. result is still "Driver"
 }
 
 

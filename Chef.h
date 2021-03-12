@@ -10,7 +10,7 @@ class Chef: public Worker
     public:
         Chef(string);
 
-        string getCareer();
+        string getCareer(); // step2: declare function as usual
 };
 
 #endif // CHEF_H
