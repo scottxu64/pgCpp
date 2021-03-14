@@ -34,10 +34,16 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Chef.cpp" />
+		<Unit filename="Chef.h" />
+		<Unit filename="Driver.cpp" />
+		<Unit filename="Driver.h" />
 		<Unit filename="Person.cpp" />
 		<Unit filename="Person.h" />
 		<Unit filename="Team.cpp" />
 		<Unit filename="Team.h" />
+		<Unit filename="Worker.cpp" />
+		<Unit filename="Worker.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

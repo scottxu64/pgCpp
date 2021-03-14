@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "Person.h"
 #include "Team.h"
 
@@ -254,7 +255,57 @@ void pgPolyMorphism(){
      cout << ((Chef*)pDriver)->getCareer() << endl;     // downcast. result is still "Driver"
 }
 
+// Function Template
+template<typename MyType>
+MyType add(MyType a, MyType b){
+    return a+b;
+}
+void pgFunctionTemplate1(){
+    int a1 = 100, b1 = 200, result1;
+    result1 = add(a1, b1);
+    cout << to_string(result1) << endl;
 
+    double a2 = 1.11, b2 = 2.22, result2;
+    result2 = add(a2, b2);
+    cout << to_string(result2) << endl;
+}
+
+template <typename Type1, typename Type2>
+string concat(Type1 a, Type2 b){
+    return to_string(a) + to_string(b);
+}
+
+void pgFunctionTemplate2(){
+    int a = 100;
+    double b = 200.22;
+    cout << concat(a, b) << endl;
+}
+
+// Class Template
+template<typename T>
+class CompareTool {
+    public:
+        CompareTool(T a, T b){
+            _a = a;
+            _b = b;
+        };
+
+        string getBigger();
+    private:
+        T _a;
+        T _b;
+};
+
+template<typename T>      // must have it for all function body
+string CompareTool<T>::getBigger(){
+    return _a > _b ? to_string(_a) : to_string(_b);
+}
+
+void pgClassTemplate(){
+    CompareTool<double> compareTool(123.45, 234.56);    // must define concrete template type here
+
+    cout << compareTool.getBigger() << endl;
+}
 
 
 int main()
@@ -290,7 +341,8 @@ int main()
 
 //    pgOperatorOverloading();
 
-    pgPolyMorphism();
-
+//    pgFunctionTemplate1();
+//    pgFunctionTemplate2();
+    pgClassTemplate();
     return 0;
 }
