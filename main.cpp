@@ -330,6 +330,22 @@ void pgTemplateSpecialization(){
 }
 
 
+// error handling
+void pgErrorHanding(){
+    try {
+        throw "500.123";   // need to be a number
+    } catch(int err) {
+        cout << "handling error#: " << err << endl;
+    } catch(double err){
+        cout << "handling error#: " << err << endl;
+    } catch(...){
+        cout << "catch all handler" << endl;
+    }             // C++ don't have finally
+}
+
+
+
+
 
 int main()
 {
@@ -367,7 +383,8 @@ int main()
 //    pgFunctionTemplate1();
 //    pgFunctionTemplate2();
 //    pgClassTemplate();
-    pgTemplateSpecialization();
+//    pgTemplateSpecialization();
 
+    pgErrorHanding();
     return 0;
 }
