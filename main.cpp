@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <time.h>
 
 #include "Person.h"
 #include "Team.h"
@@ -333,7 +335,7 @@ void pgTemplateSpecialization(){
 // error handling
 void pgErrorHanding(){
     try {
-        throw "500.123";   // need to be a number
+        throw "500.123";
     } catch(int err) {
         cout << "handling error#: " << err << endl;
     } catch(double err){
@@ -343,7 +345,37 @@ void pgErrorHanding(){
     }             // C++ don't have finally
 }
 
+// file system
+string getCurrentTime(){
+    time_t     now = time(0);
+    struct tm  tstruct;
+    char       buf[80];
+    tstruct = *localtime(&now);
+    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+    return buf;
+}
 
+void pgFileSystem(){
+    ofstream myFile;
+    myFile.open("myFile.txt", ios_base::app);   // if myFile.txt doesn't exist, C++ will create it for you. `ios_base::app` flag will append new content to file
+
+    if(myFile.is_open()){   // if true then the file and object are successfully linked, and ready for use.
+        cout << "Enter Item, Price" << endl;
+        cout << "Press Ctrl+Z to complete" << endl;     // `Ctrl+Z` in terminal is EOF, which will stop while loop
+
+        string item;
+        double price;
+
+        while(cin >> item >> price){    // input will be saved to item, then price. Input format like: beef 123 \n egg 234 \n ^Z
+            myFile << item << "\t" << price << endl;
+        }
+
+        myFile << "session completed at " << getCurrentTime() << endl;
+        myFile.close();             // otherwise memory leak
+    } else {
+        // handle situations like forgot to link object to file
+    }
+}
 
 
 
@@ -385,6 +417,7 @@ int main()
 //    pgClassTemplate();
 //    pgTemplateSpecialization();
 
-    pgErrorHanding();
+//    pgErrorHanding();
+    pgFileSystem();
     return 0;
 }

@@ -1,6 +1,8 @@
 # depslib dependency file v1.0
-1615770994 source:c:\workspace\playground\hello-world\main.cpp
+1615779729 source:c:\workspace\playground\hello-world\main.cpp
 	<iostream>
+	<fstream>
+	<time.h>
 	"Person.h"
 	"Team.h"
 	"Worker.h"
