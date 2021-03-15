@@ -307,6 +307,29 @@ void pgClassTemplate(){
     cout << compareTool.getBigger() << endl;
 }
 
+// template specialization
+template <typename T>
+class TemplateSpecialization {
+public:
+    TemplateSpecialization(T arg){
+        cout << to_string(arg) << ", from default template" << endl;
+    }
+};
+
+template<>
+class TemplateSpecialization<string>{     // use this class when constructor has <string> signature
+public:
+    TemplateSpecialization(string arg){
+        cout << arg << ", from template specialization" << endl;
+    }
+};
+
+void pgTemplateSpecialization(){
+    TemplateSpecialization<int> templateSpecialization1(12345);
+    TemplateSpecialization<string> templateSpecialization2("I am a string");
+}
+
+
 
 int main()
 {
@@ -343,6 +366,8 @@ int main()
 
 //    pgFunctionTemplate1();
 //    pgFunctionTemplate2();
-    pgClassTemplate();
+//    pgClassTemplate();
+    pgTemplateSpecialization();
+
     return 0;
 }
