@@ -355,7 +355,7 @@ string getCurrentTime(){
     return buf;
 }
 
-void pgFileSystem(){
+void pgFileSystemWrite(){
     ofstream myFile;
     myFile.open("myFile.txt", ios_base::app);   // if myFile.txt doesn't exist, C++ will create it for you. `ios_base::app` flag will append new content to file
 
@@ -370,14 +370,28 @@ void pgFileSystem(){
             myFile << item << "\t" << price << endl;
         }
 
-        myFile << "session completed at " << getCurrentTime() << endl;
+//        myFile << "session completed at " << getCurrentTime() << endl;
         myFile.close();             // otherwise memory leak
     } else {
         // handle situations like forgot to link object to file
     }
 }
 
+void pgFileSystemRead(){
+    ifstream myFile("myFile.txt");
 
+    if(myFile.is_open()){
+        string item;
+        double price;
+
+        while(myFile >> item >> price){
+            cout << item << " will cost you: $" << price << endl;
+        }
+        myFile.close();
+    } else {
+    }
+
+}
 
 int main()
 {
@@ -418,6 +432,8 @@ int main()
 //    pgTemplateSpecialization();
 
 //    pgErrorHanding();
-    pgFileSystem();
+
+//    pgFileSystemWrite();
+    pgFileSystemRead();
     return 0;
 }
