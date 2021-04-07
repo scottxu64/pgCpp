@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <time.h>
+#include <string> // for string functions. won't need it for using string
+
 
 #include "Person.h"
 #include "Team.h"
@@ -366,7 +368,7 @@ void pgFileSystemWrite(){
         string item;
         double price;
 
-        while(cin >> item >> price){    // input will be saved to item, then price. Input format like: beef 123 \n egg 234 \n ^Z
+        while(cin >> item >> price){    // input will be saved to item, then price. Input format like: beef 123 \n egg 234 \n ^Z, the end of each input is defined by white space, so \t works too
             myFile << item << "\t" << price << endl;
         }
 
@@ -391,6 +393,56 @@ void pgFileSystemRead(){
     } else {
     }
 
+}
+
+
+// string
+void pgStringInput(){
+    string myString;
+
+//    cin >> myString;            // hello world
+//    cout << myString << endl;   // hello    cin will only read first section divided by white space
+
+    getline(cin, myString);       // hello world
+    cout << myString << endl;     // hello world
+}
+
+void pgStringCopy(){
+    string s1 = "foo bar";      // other syntax: string s1("foo bar");
+    cout << s1 << endl;
+
+    string s2 = s1;             // other syntax: s2.assign(s1);
+    s2 = "hello world";
+    cout << s1 << endl;     // foo bar
+
+    string *pS3 = &s1;
+    *pS3 = "hello world";
+    cout << s1 << endl;     // hello world
+}
+
+void pgStringFunctions(){
+    string s1 = "hello world";
+    cout << s1[1] << endl;   // other syntax: s1.at(1);
+    cout << s1.substr(6, 5) << endl;    // substr(int skip, int take)
+
+    string s2 = "foo bar";
+    cout << s1 << "--" << s2 << endl;
+    s1.swap(s2);            // useful for sorting
+    cout << s1 << "--" << s2 << endl;
+
+    // string find
+    string s3 = "hey hello world hello foobar";
+    cout << s3.find("hello") << endl;           // 4    find() returns index of first match found
+    cout << s3.rfind("hello") << endl;          // 16   rfind() reverse find will return the last match found
+    cout << s3.rfind("non exist") << endl;      // 18446744073709551615
+
+    // string mutation
+    s3.erase(25);                       // c++ strings are mutable! erase(int start_letter_index)
+    cout << s3 << endl;
+    s3.replace(10, 5, "Cheers");        // replace(int skip, int take, string new_string)
+    cout << s3 << endl;
+    s3.insert(4, "there, ");            // insert(int skip, string insert_string)
+    cout << s3 << endl;
 }
 
 int main()
@@ -434,6 +486,10 @@ int main()
 //    pgErrorHanding();
 
 //    pgFileSystemWrite();
-    pgFileSystemRead();
+//    pgFileSystemRead();
+
+//    pgStringInput();
+//    pgStringCopy();
+    pgStringFunctions();
     return 0;
 }
