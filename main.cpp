@@ -2,7 +2,7 @@
 #include <fstream>
 #include <time.h>
 #include <string> // for string functions. won't need it for using string
-
+#include <vector>
 
 #include "Person.h"
 #include "Team.h"
@@ -445,6 +445,17 @@ void pgStringFunctions(){
     cout << s3 << endl;
 }
 
+// vector
+void pgVector(){
+    vector<string> myVector = {"a","b","c"}; // similar to JAVA arrayList
+    myVector.push_back("d");          // add an element to the end
+    myVector[0] = "aa";               // change an element value
+
+    for (string element: myVector){
+        cout << element << endl;
+    }
+}
+
 int main()
 {
     //    pgPointer();
@@ -490,6 +501,7 @@ int main()
 
 //    pgStringInput();
 //    pgStringCopy();
-    pgStringFunctions();
+//    pgStringFunctions();
+    pgVector();
     return 0;
 }
