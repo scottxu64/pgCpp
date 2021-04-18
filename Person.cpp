@@ -1,55 +1,64 @@
 #include "Person.h"
-#include <iostream>
+// #include <iostream>     // This is already included in header file, when include header file, it will be copied over
 
 using namespace std;
 
 Person::Person() // class::method, here is the implementation of method.
 {
-    cout << "person constructor" << endl;
+	cout << "person constructor" << endl;
 }
 
 Person::~Person()
 {
-    cout << "person deconstructor" << endl;
+	cout << "person deconstructor" << endl;
 }
 
 void Person::setName(string name)
 {
-    _name = name;
+	_name = name;
 }
 
-string Person::getName(){
-    return _name;
+string Person::getName()
+{
+	return _name;
 }
-string Person::getNameUsingThisRef(){
-    return this->_name;     // this is a pointer to current object
+
+string Person::getNameUsingThisRef()
+{
+	return this->_name; // this is a pointer to current object
 }
-string Person::getNameUsingThisDeRef(){
-    return (*this)._name;
+
+string Person::getNameUsingThisDeRef()
+{
+	return (*this)._name;
 }
 
 // constant
 void Person::methodForConstObj() const
 {
-    cout << "const method for const object" << endl;
+	cout << "const method for const object" << endl;
 }
 
 Person::Person(string name, string nameConst)
-    : _name(name), _nameConst(nameConst) // "member initializer syntax" to assign values to const members (aka global variables aka field)
-{}
+	: _name(name), _nameConst(nameConst)
+// "member initializer syntax" to assign values to const members (aka global variables aka field)
+{
+}
 
 string Person::getNameConst()
 {
-    return _nameConst;
+	return _nameConst;
 }
 
 // operator overloading
-Person::Person(int __asset){
-    asset = __asset;
+Person::Person(int __asset)
+{
+	asset = __asset;
 }
 
-Person Person::operator+(Person oldPerson){
-    Person newPerson;
-    newPerson.asset = asset + oldPerson.asset;
-    return newPerson;
+Person Person::operator+(Person oldPerson)
+{
+	Person newPerson;
+	newPerson.asset = asset + oldPerson.asset;
+	return newPerson;
 }
