@@ -594,6 +594,16 @@ void pgCast()
 	// TODO: more casts: dynamic_cast<>, const_cast<>, reinterpret_cast<>
 }
 
+// scope
+void pgScope() {
+
+	Person person1;
+
+	{					// curly braces can be put any where to define a scope.
+		Person person2;	// person2's scope is between curly braces above and below it.
+	}
+}
+
 
 int main()
 {
@@ -616,7 +626,7 @@ int main()
 	//    cout << x << endl;      // 100
 	//    cout << y << endl;      // 201
 
-	pgPassByValueAndReference();
+	//	  pgPassByValueAndReference();
 
 	//    pgConstKeyword();
 
@@ -647,6 +657,8 @@ int main()
 	// pgVectorComparable();
 
 	// pgCast();
+
+	pgScope();
 
 	return 0;
 }

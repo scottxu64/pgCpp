@@ -11,3 +11,7 @@ Chef::Chef(string name)
 string Chef::getCareer(){   // step3: implement function as usual
     return "chef";
 }
+
+Chef::Chef(string name, string career)
+    :Worker(name), _career(career)
+{}

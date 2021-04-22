@@ -10,7 +10,12 @@ class Chef: public Worker
     public:
         Chef(string);
 
+        Chef(string name, string career);   // variable name is optional but can help understand its purpose.
+
         string getCareer(); // step2: declare function as usual
+
+private:
+    std::string _career;
 };
 
 #endif // CHEF_H

@@ -7,7 +7,7 @@ using namespace std; // This is a bad sample, should not use using statement in 
 class Person
 {
 public:
-	Person();
+	Person();		// if we don't have any logic, just want the empty default constructor, can simplify like: Person() = default
 	~Person(); // destructor
 
 	void setName(string name);

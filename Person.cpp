@@ -10,7 +10,7 @@ Person::Person() // class::method, here is the implementation of method.
 
 Person::~Person()
 {
-	cout << "person deconstructor" << endl;
+	cout << "person destructor" << endl;
 }
 
 void Person::setName(string name)
