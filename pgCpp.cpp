@@ -596,12 +596,37 @@ void pgCast()
 
 // scope
 void pgScope() {
-
 	Person person1;
 
 	{					// curly braces can be put any where to define a scope.
 		Person person2;	// person2's scope is between curly braces above and below it.
 	}
+}
+
+// enum
+void pgEnum() {
+	// not scoped, must be unique globally
+	enum myenumerables {
+		STATUS1,	// don't need to specify value here, compiler will give default values from 0; still can set a int value like STATUS1 = 99
+		STATUS2,
+		STATUS3
+	};
+
+	// scoped
+	enum class MyScopedEnumerables {
+		STATUS1,
+		STATUS2,
+		STATUS3
+	};
+	enum class MyScopedEnumerables2 {
+		STATUS1,
+		STATUS2,
+		STATUS3
+	};
+
+	myenumerables status1 = STATUS1;
+	MyScopedEnumerables MyScopedEnumerableStatus1 = MyScopedEnumerables::STATUS1;
+	MyScopedEnumerables2 MyScopedEnumerable2Status1 = MyScopedEnumerables2::STATUS1;
 }
 
 
@@ -658,7 +683,9 @@ int main()
 
 	// pgCast();
 
-	pgScope();
+	//pgScope();
+
+	pgEnum();
 
 	return 0;
 }

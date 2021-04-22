@@ -9,7 +9,7 @@ class Worker
 {
     public:
         Worker(std::string);        // always specify full namespace in header file
-        std::string getName();
+        std::string getName() const;
 
         virtual std::string getCareer() = 0;  // step1: =0 means this is a pure virtual function. means no implementation in Worker class
                                          // or keep it as virtual but provide an default implementation: virtual string getCareer(){}, so if one child class has no implementation, this empty one will be executed.
