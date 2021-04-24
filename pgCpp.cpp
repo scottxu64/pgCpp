@@ -278,8 +278,15 @@ void pgOperatorOverloading()
 	Person oldPerson(100);
 	Person newPerson(200);
 	Person person = newPerson + oldPerson; // result from object operation directly
-	cout << person.asset << endl;
+	cout << person.asset << endl;		// 300
+
+	person + 123;
+	cout << person.asset << endl;		// 423
+
+	123 + person;		// need to use free function operator overload
+	cout << person.asset << endl;		// 546
 }
+
 
 void pgPolyMorphism()
 {
@@ -661,7 +668,7 @@ int main()
 
 	//    pgThisKeyword();
 
-	//    pgOperatorOverloading();
+	    pgOperatorOverloading();
 
 	//    pgFunctionTemplate1();
 	//    pgFunctionTemplate2();
@@ -685,7 +692,7 @@ int main()
 
 	//pgScope();
 
-	pgEnum();
+	//pgEnum();
 
 	return 0;
 }

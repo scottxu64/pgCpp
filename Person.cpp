@@ -62,3 +62,16 @@ Person Person::operator+(Person oldPerson)
 	newPerson.asset = asset + oldPerson.asset;
 	return newPerson;
 }
+
+Person Person::operator+(int __asset) 
+{
+	asset = asset + __asset;	// or: this->asset = this->asset + __asset;
+	return *this;
+}
+
+Person operator+(int __asset, Person& person) {
+	person.asset = person.asset + __asset;	// here by default can only access public members
+	person._name;	// but if declared this operator overload as friend, then any member is accessible.
+	return person;
+}
+

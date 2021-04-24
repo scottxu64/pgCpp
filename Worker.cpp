@@ -8,6 +8,6 @@ Worker::Worker(string name)
     :_name(name)
 {}
 
-string Worker::getName(){
+string Worker::getName() const{
     return _name;
 }

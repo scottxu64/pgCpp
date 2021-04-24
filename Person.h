@@ -25,10 +25,16 @@ public:
 	int asset;
 	Person(int); // TODO: seems I don't need a var name here...
 	Person operator+(Person); // naming rule: start with 'operator', then what to overloading: '+'
+	Person operator+(int asset);
 
 private:
 	string _name;
 	const string _nameConst;
+	friend Person operator+(int __asset, Person& person);	// define friend method by copying the free function's signature and perpend keyword `friend`
 };
+
+Person operator+(int __asset, Person& person);	// notice this is a free function
+												// so anywhere when signature matching (int, Person) this will work
+												// if accidently put this operator overload in Person class, then the signature will be: Person + (int, Person)
 
 #endif // PERSON_H
