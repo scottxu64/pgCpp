@@ -34,7 +34,7 @@ private:
 };
 
 Person operator+(int __asset, Person& person);	// notice this is a free function
-												// so anywhere when signature matching (int, Person) this will work
-												// if accidently put this operator overload in Person class, then the signature will be: Person + (int, Person)
+												// so anywhere when signature matching `int + Person` this will be triggered
+												// if accidently put this operator overload in Person class, then the signature will be: `Person + (int, Person)`, which is not possible to achieve
 
 #endif // PERSON_H

@@ -307,7 +307,7 @@ void pgPolyMorphism()
 
 // Function Template
 template <typename MyType>
-MyType add(MyType a, MyType b)
+MyType add(MyType const& a, MyType const& b)
 {
 	return a + b;
 }
@@ -316,24 +316,25 @@ void pgFunctionTemplate1()
 {
 	int a1 = 100, b1 = 200, result1;
 	result1 = add(a1, b1);
-	cout << to_string(result1) << endl;
+	cout << result1 << endl;
 
 	double a2 = 1.11, b2 = 2.22, result2;
-	result2 = add(a2, b2);
-	cout << to_string(result2) << endl;
+	result2 = add(a2, b2);		// so add() is reused by int and double input types
+	cout << result2 << endl;
 }
 
 template <typename Type1, typename Type2>
 string concat(Type1 a, Type2 b)
 {
-	return to_string(a) + to_string(b);
+	return to_string(a) + ' ' + to_string(b);
 }
 
 void pgFunctionTemplate2()
 {
 	int a = 100;
 	double b = 200.22;
-	cout << concat(a, b) << endl;
+	cout << concat(a, b) << endl;		// concat() is reused by different signatures, rather than create 2 similar methods
+	cout << concat(b, a) << endl;
 }
 
 // Class Template
@@ -378,9 +379,8 @@ public:
 };
 
 template <>
-class TemplateSpecialization<string>
+class TemplateSpecialization<string>	// use this class when constructor has <string> signature
 {
-	// use this class when constructor has <string> signature
 public:
 	TemplateSpecialization(string arg)
 	{
@@ -392,6 +392,64 @@ void pgTemplateSpecialization()
 {
 	TemplateSpecialization<int> templateSpecialization1(12345);
 	TemplateSpecialization<string> templateSpecialization2("I am a string");
+}
+
+
+// template with operator overload
+template <typename T>
+class TemplateWithOperatorOverload {
+private:
+	T result;
+public:
+	TemplateWithOperatorOverload(T const& value)
+		: result(value){}
+
+	T operator+= (T const& value) {
+		return result = result + value;
+	}
+
+	T getTotal() const {
+		return result;
+	}
+};
+
+void pgTemplateWithOperatorOverload() {
+	TemplateWithOperatorOverload<double> twoo1(1.23);
+	twoo1 += 2.34;
+	cout << twoo1.getTotal() << endl;
+
+	TemplateWithOperatorOverload<int> twoo2(100);
+	twoo2 += 200;
+	cout << twoo2.getTotal() << endl;
+
+	TemplateWithOperatorOverload<string> twoo3("hello");
+	twoo3 += " world ";		// same operator overload is reused for different template types
+	cout << twoo3.getTotal() << endl;
+}
+
+// template with operator overload and specialization
+template <>		// common template is using the above sample
+class TemplateWithOperatorOverload<Person> {	// notice this specializer is for Person, but constructor is for int
+private:
+	int result;
+public:
+	TemplateWithOperatorOverload(int const& asset)
+		: result(asset) {}
+
+	int operator+= (Person const& person) {
+		return result = result + person.asset;
+	}
+
+	int getTotal() const {
+		return result;
+	}
+};
+
+void pgTemplateWithOperatorOverloadAndSpecialization() {
+	TemplateWithOperatorOverload<Person> twoo(100);
+	Person p1(20);
+	twoo += p1;
+	cout << twoo.getTotal() << endl;
 }
 
 
@@ -668,12 +726,14 @@ int main()
 
 	//    pgThisKeyword();
 
-	    pgOperatorOverloading();
+	    //pgOperatorOverloading();
 
-	//    pgFunctionTemplate1();
-	//    pgFunctionTemplate2();
-	//    pgClassTemplate();
-	//    pgTemplateSpecialization();
+	    //pgFunctionTemplate1();
+	    //pgFunctionTemplate2();
+	    //pgClassTemplate();
+	    //pgTemplateSpecialization();
+	//pgTemplateWithOperatorOverload();
+	pgTemplateWithOperatorOverloadAndSpecialization();
 
 	//    pgErrorHanding();
 
