@@ -37,6 +37,35 @@ void pgPointer()
 	cout << pArr0 << endl; // 0x63fd68, same as pArr2
 }
 
+// reference
+void pgReference() {
+	string name = "foo";
+	string& rName = name;
+	rName = "bar";
+	cout << name << endl;	// changed to "bar"; the benefit of reference is it can be passed around easily w/o creating copies
+
+	Person person;
+	Person& rPerson = person;	// reference MUST be assigned at the momnent of declearation, that means reference can NOT reassigned, while pointer can
+	rPerson.setName("hello");
+	cout << person.getName() << rPerson.getName() << endl;
+}
+
+// const with indirection
+void pgConstWithIndirection() {	// indirection means pointer or reference
+	int i = 123;
+	int j = 234;
+	int* const cpI = &i;	// CONST POINTER
+	// cpI = &j;			// this won't build as the pointer is constant, can't reassign
+	*cpI = 1234;			// this will work, is putting value 1234 to same address of i
+
+	int const* cpJ = &j;	// CONST VALUE
+	// *cpJ = 345;			// this won't work as value is constant
+	cpJ = &i;
+	cout << *cpJ << endl;	// 1234, by the way, still can't do *cpJ = 2345, value is locked
+
+	int const* const cpCc = &j;	// const value and const pointer
+}
+
 
 // class
 class Book
@@ -174,12 +203,12 @@ void passObjByValue(Person person)
 
 void passObjByRef(Person* pPerson)
 {
-	pPerson->setName("name set by ref"); // must use arrow selector when using reference, or dereference first
+	pPerson->setName("name set by ref"); // must use arrow selector when using pointer, or dereference first
 }
 
-void passObjByRef2(Person& person) // this `&` is not get pointer, it means pass by reference
+void passObjByRef2(Person& person) // this `&` is not get pointer, it means get and use reference of person instance
 {
-	person.setName("name set by ref2"); // wrapped getting pointer, pass by ref, dereference all in one, USE THIS!
+	person.setName("name set by ref2"); // use reference just like instance itself, but without creating a copy. USE THIS!
 }
 
 void passObjByConstRef(const Person& person)
@@ -211,13 +240,14 @@ void pgPassByValueAndReference()
 void pgConstKeyword()
 {
 	// case 1: const var
-	const int x = 100; // must initiate on define
+	const int cx = 100; // must initiate on define
 
 	// case 2: const obj
-	const Person personConst;
-	personConst.methodForConstObj(); // constant object can only use constant methods
+	const Person cPerson;
+	cPerson.methodForConstObj(); // constant object can only use constant methods
 	// other non constant objects can also use this method
 	// const keyword on method means this method won't make any data change.
+
 	// case 3: providing value for const var in function, notice it is not const object
 	Person person("reg name", "const name");
 	cout << person.getNameConst() << endl; // "const name"
@@ -429,7 +459,7 @@ void pgTemplateWithOperatorOverload() {
 
 // template with operator overload and specialization
 template <>		// common template is using the above sample
-class TemplateWithOperatorOverload<Person> {	// notice this specializer is for Person, but constructor is for int
+class TemplateWithOperatorOverload<Person> {	// notice this specializer is for Person, but constructor can for int
 private:
 	int result;
 public:
@@ -695,9 +725,14 @@ void pgEnum() {
 }
 
 
+
+
+
 int main()
 {
 	//    pgPointer();
+	//pgReference();
+	pgConstWithIndirection();
 
 	//    pgClass();
 
@@ -733,7 +768,7 @@ int main()
 	    //pgClassTemplate();
 	    //pgTemplateSpecialization();
 	//pgTemplateWithOperatorOverload();
-	pgTemplateWithOperatorOverloadAndSpecialization();
+	//pgTemplateWithOperatorOverloadAndSpecialization();
 
 	//    pgErrorHanding();
 
