@@ -4,12 +4,13 @@
 using namespace std;
 
 Person::Person() // class::method, here is the implementation of method.
-{
+:pPet(nullptr){
 	cout << "person constructor" << endl;
 }
 
 Person::~Person()
 {
+	delete pPet;				// free store step 4: IMPORTANT: put delete logic in person destructor. so it will be destroyed along.
 	cout << "person destructor" << endl;
 }
 
@@ -75,3 +76,8 @@ Person operator+(int __asset, Person& person) {
 	return person;
 }
 
+
+// free store
+void Person::addPet(string petName) {
+	pPet = new FreeStore(petName);			// free store step 3: implement the add logic using free store
+}

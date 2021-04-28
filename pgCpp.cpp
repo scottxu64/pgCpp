@@ -748,11 +748,12 @@ void pgFreeStore() {
 	pCopiedFreeStorePointer->GetName();
 
 	delete pFreeStore;
-
-
-
 }
 
+void pgFreeStoreAttachToLocalInstance() {
+	Person person;
+	person.addPet("petName");
+}	// should see: person constructor >> free storage constructor >> free storage destructor >> person destructor
 
 int main()
 {
@@ -815,7 +816,8 @@ int main()
 
 	//pgEnum();
 
-	pgFreeStore();
+	//pgFreeStore();
+	pgFreeStoreAttachToLocalInstance();
 
 	return 0;
 }
