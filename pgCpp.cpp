@@ -12,6 +12,8 @@
 #include "Chef.h"
 #include "Driver.h"
 
+#include "FreeStore.h"
+
 using namespace std;
 
 // pointer
@@ -725,14 +727,38 @@ void pgEnum() {
 }
 
 
+// free store
+void pgFreeStore() {
+	// local instance (aka: stack), constructor and destructor called when out of scope
+	{
+		FreeStore freeStore("abc");
+		string name = freeStore.GetName();	
+	}
 
+	// free store instance (aka: heap)
+	FreeStore* pFreeStore = new FreeStore("123");	// construct, notice returns a pointer
+	string name = pFreeStore->GetName();
+	delete pFreeStore;								// destruct. Manually by `delete` keyword, memory leak if not deleted
+	pFreeStore = nullptr;
+
+	// bad logic after delete (all throws error):
+	pFreeStore->GetName();
+
+	FreeStore* pCopiedFreeStorePointer = pFreeStore;
+	pCopiedFreeStorePointer->GetName();
+
+	delete pFreeStore;
+
+
+
+}
 
 
 int main()
 {
 	//    pgPointer();
 	//pgReference();
-	pgConstWithIndirection();
+	//pgConstWithIndirection();
 
 	//    pgClass();
 
@@ -788,6 +814,8 @@ int main()
 	//pgScope();
 
 	//pgEnum();
+
+	pgFreeStore();
 
 	return 0;
 }
