@@ -764,6 +764,21 @@ void pgFreeStoreWithCopy() {
 	person3 = person;			// This will call `copy assignment`
 }
 
+// smart pointer
+void pgSmartPointer() {
+	Chef chef("chefName");
+
+	chef.addPet("petName");
+	string petName = chef.getPetName();		// petName
+	chef.addPet("petName2");				// without adding delete logic; need reset() though
+	petName = chef.getPetName();			// petName2
+
+	Chef chef2 = chef;						// smart make a new copy, without implementing copy constructor / assiignment
+	chef2.addPet("petName3");				// last line will have 2 reference to shared_ptr of "petName2", this line will remove one reference at reset(), and create a new make_shared for chef2
+	petName = chef.getPetName();			// petName2
+	petName = chef2.getPetName();			// petName3
+}	// no delete logic in destructor needed
+
 
 int main()
 {
@@ -828,7 +843,8 @@ int main()
 
 	//pgFreeStore();
 	//pgFreeStoreAttachToLocalInstance();
-	pgFreeStoreWithCopy();
+	//pgFreeStoreWithCopy();
+	pgSmartPointer();
 
 	return 0;
 }

@@ -8,6 +8,8 @@ using namespace std;
 class Chef: public Worker
 {
     public:
+        Chef() = default;
+
         Chef(string);
 
         Chef(string name, string career);   // variable name is optional but can help understand its purpose.

@@ -78,6 +78,7 @@ Person operator+(int __asset, Person& person) {
 
 // free store
 void Person::addPet(string petName) {
+	delete pPet;
 	pPet = new FreeStore(petName);			// free store step 3: implement the add logic using free store
 }
 
