@@ -28,7 +28,12 @@ public:
 	Person operator+(Person); // naming rule: start with 'operator', then what to overloading: '+'
 	Person operator+(int asset);
 
+	// free store
 	void addPet(std::string);		// free store step 2: add a function to kick off FreeStore constructor
+	
+	Person(Person const& person);		// this is `copy constructor`
+	Person& operator=(const Person& p);	// this is `copy assignment`
+
 
 private:
 	string _name;

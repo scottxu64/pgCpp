@@ -755,6 +755,16 @@ void pgFreeStoreAttachToLocalInstance() {
 	person.addPet("petName");
 }	// should see: person constructor >> free storage constructor >> free storage destructor >> person destructor
 
+void pgFreeStoreWithCopy() {
+	Person person;
+	person.addPet("petName");
+
+	Person person2 = person;	// This will call `copy constructor`
+	Person person3;
+	person3 = person;			// This will call `copy assignment`
+}
+
+
 int main()
 {
 	//    pgPointer();
@@ -817,7 +827,8 @@ int main()
 	//pgEnum();
 
 	//pgFreeStore();
-	pgFreeStoreAttachToLocalInstance();
+	//pgFreeStoreAttachToLocalInstance();
+	pgFreeStoreWithCopy();
 
 	return 0;
 }

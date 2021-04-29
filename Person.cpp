@@ -76,8 +76,17 @@ Person operator+(int __asset, Person& person) {
 	return person;
 }
 
-
 // free store
 void Person::addPet(string petName) {
 	pPet = new FreeStore(petName);			// free store step 3: implement the add logic using free store
+}
+
+Person::Person(Person const& person) {
+	pPet = new FreeStore(person.pPet->GetName() + " constructor");
+}
+
+Person& Person::operator=(const Person& person) {	// notice return type is Person&, otherwise *this will make a copy to send back, which will call `copy constructor` again
+	delete pPet;
+	pPet = new FreeStore(person.pPet->GetName() + " assignment");
+	return *this;		// TODO: so reference is same as dereferenced value?
 }
