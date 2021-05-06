@@ -1,14 +1,14 @@
-#include "FreeStore.h"
+#include "MyFreeStore.h"
 
 using namespace std;
 
-FreeStore::FreeStore(string name) 
+MyFreeStore::MyFreeStore(string name) 
 	:_name(name)
 {
 	cout << "constructor called" << endl;
 }
 
-FreeStore::~FreeStore()
+MyFreeStore::~MyFreeStore()
 {
 	cout << "destructor called" << endl;
 }

@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <memory>
-#include "FreeStore.h"
+#include "MyFreeStore.h"
 
 //using namespace std;          // Do NOT use using syntax so people won't get conflict when using your header file.
 
@@ -23,7 +23,7 @@ class Worker
 
     private:
         std::string _name;
-        std::shared_ptr<FreeStore> pPet;
+        std::shared_ptr<MyFreeStore> pPet;
 
 };
 

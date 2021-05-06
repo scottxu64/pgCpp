@@ -1,14 +1,14 @@
 #pragma once
 #include <iostream>
 
-class FreeStore
+class MyFreeStore
 {
 private:
 	std::string _name;
 
 public:
-	FreeStore(std::string);
-	~FreeStore();
+	MyFreeStore(std::string);
+	~MyFreeStore();
 
 	std::string GetName() const { return _name; }
 };

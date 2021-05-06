@@ -1,7 +1,7 @@
 #ifndef PERSON_H // ifndef = if not defined
 #define PERSON_H
 #include <iostream>
-#include "FreeStore.h"
+#include "MyFreeStore.h"
 
 using namespace std; // This is a bad sample, should not use using statement in header, to avoid side effects
 
@@ -39,7 +39,7 @@ private:
 	string _name;
 	const string _nameConst;
 	friend Person operator+(int __asset, Person& person);	// define friend method by copying the free function's signature and perpend keyword `friend`
-	FreeStore* pPet;		// free store step 1: add a private member
+	MyFreeStore* pPet;		// free store step 1: add a private member
 };
 
 Person operator+(int __asset, Person& person);	// notice this is a free function

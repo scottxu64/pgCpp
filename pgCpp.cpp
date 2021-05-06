@@ -12,7 +12,7 @@
 #include "Chef.h"
 #include "Driver.h"
 
-#include "FreeStore.h"
+#include "MyFreeStore.h"
 
 using namespace std;
 
@@ -731,12 +731,12 @@ void pgEnum() {
 void pgFreeStore() {
 	// local instance (aka: stack), constructor and destructor called when out of scope
 	{
-		FreeStore freeStore("abc");
-		string name = freeStore.GetName();	
+		MyFreeStore myFreeStore("abc");
+		string name = myFreeStore.GetName();
 	}
 
 	// free store instance (aka: heap)
-	FreeStore* pFreeStore = new FreeStore("123");	// construct, notice returns a pointer
+	MyFreeStore* pFreeStore = new MyFreeStore("123");	// construct, notice returns a pointer
 	string name = pFreeStore->GetName();
 	delete pFreeStore;								// destruct. Manually by `delete` keyword, memory leak if not deleted
 	pFreeStore = nullptr;
@@ -744,7 +744,7 @@ void pgFreeStore() {
 	// bad logic after delete (all throws error):
 	pFreeStore->GetName();
 
-	FreeStore* pCopiedFreeStorePointer = pFreeStore;
+	MyFreeStore* pCopiedFreeStorePointer = pFreeStore;
 	pCopiedFreeStorePointer->GetName();
 
 	delete pFreeStore;

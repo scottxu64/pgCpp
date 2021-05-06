@@ -33,7 +33,7 @@
     <ClCompile Include="Worker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FreeStore.cpp">
+    <ClCompile Include="MyFreeStore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClInclude Include="Worker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FreeStore.h">
+    <ClInclude Include="MyFreeStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
