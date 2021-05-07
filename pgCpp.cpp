@@ -736,18 +736,16 @@ void pgFreeStore() {
 	}
 
 	// free store instance (aka: heap)
-	MyFreeStore* pFreeStore = new MyFreeStore("123");	// construct, notice returns a pointer
-	string name = pFreeStore->GetName();
-	delete pFreeStore;								// destruct. Manually by `delete` keyword, memory leak if not deleted
-	pFreeStore = nullptr;
+	MyFreeStore* pMyFreeStore = new MyFreeStore("123");	// construct, notice returns a pointer
+	string name = pMyFreeStore->GetName();
+	MyFreeStore* pCopiedFreeStorePointer = pMyFreeStore;	// this is copying a pointer, no new instance will be created.
+	delete pMyFreeStore;				// destruct. Manually by `delete` keyword, memory leak if not deleted
+	pMyFreeStore = nullptr;
 
-	// bad logic after delete (all throws error):
-	pFreeStore->GetName();
-
-	MyFreeStore* pCopiedFreeStorePointer = pFreeStore;
-	pCopiedFreeStorePointer->GetName();
-
-	delete pFreeStore;
+	// bad logic after delete:
+	pMyFreeStore->GetName();			// after delete, this becomes a pointer to nowhere
+	pCopiedFreeStorePointer->GetName();	// after delete, this also becomes a pointer to nowhere
+	delete pMyFreeStore;				// repoint to nullptr prevented crush. will crush if delete non exist free store.
 }
 
 void pgFreeStoreAttachToLocalInstance() {
@@ -761,20 +759,26 @@ void pgFreeStoreWithCopy() {
 
 	Person person2 = person;	// This will call `copy constructor`
 	Person person3;
+	person3.addPet("replacedPetName");
 	person3 = person;			// This will call `copy assignment`
+	// if copy constructor / assignment are not implemented, this copy acition will make a new copy, including pet pointer, 
+	// but pointers are pointing to same instance.
+	// so when person destructor called, delete pet will be called twice, which will crush code
 }
 
-// smart pointer
+// smart pointer (since cpp11)
 void pgSmartPointer() {
 	Chef chef("chefName");
 
 	chef.addPet("petName");
 	string petName = chef.getPetName();		// petName
-	chef.addPet("petName2");				// without adding delete logic; need reset() though
+	chef.addPet("petName2");				// without adding delete logic; 
+											// need reset() to decrease reference count to pet added earlier.
+											// as we only have one reference, so the reset() is triggering delete. then create a new pointer via make_shared()
 	petName = chef.getPetName();			// petName2
 
-	Chef chef2 = chef;						// smart make a new copy, without implementing copy constructor / assiignment
-	chef2.addPet("petName3");				// last line will have 2 reference to shared_ptr of "petName2", this line will remove one reference at reset(), and create a new make_shared for chef2
+	Chef chef2 = chef;						// smart make a new copy, without implementing copy constructor / assiignment, reference count increased.
+	chef2.addPet("petName3");				// in last line it has 2 references to shared_ptr of "petName2", this line will decrease one reference at reset(), and create a new pointer via make_shared() for chef2
 	petName = chef.getPetName();			// petName2
 	petName = chef2.getPetName();			// petName3
 }	// no delete logic in destructor needed

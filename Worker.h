@@ -24,7 +24,8 @@ class Worker
     private:
         std::string _name;
         std::shared_ptr<MyFreeStore> pPet;
-
+        // unique_ptr: not copy able, need to use std::move
+        // shared_ptr: shallow copy, add/decrease reference count, delete on last
 };
 
 #endif // WORKER_H

@@ -15,7 +15,7 @@ string Worker::getName() const{
 void Worker::addPet(string petName)
 {
     pPet.reset();
-    pPet = make_shared<MyFreeStore>(petName); // no new FreeStore() needed
+    pPet = make_shared<MyFreeStore>(petName); // no nullptr at constructor; no new FreeStore() needed
 }
 
 const string Worker::getPetName()

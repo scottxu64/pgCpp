@@ -78,7 +78,7 @@ Person operator+(int __asset, Person& person) {
 
 // free store
 void Person::addPet(string petName) {
-	delete pPet;
+	delete pPet;			// prevent multiple addPet() call creating memory leak
 	pPet = new MyFreeStore(petName);			// free store step 3: implement the add logic using free store
 }
 
@@ -87,7 +87,7 @@ Person::Person(Person const& person) {
 }
 
 Person& Person::operator=(const Person& person) {	// notice return type is Person&, otherwise *this will make a copy to send back, which will call `copy constructor` again
-	delete pPet;
+	delete pPet;		// copy constructor doesn't need this as its pet is always nullptr
 	pPet = new MyFreeStore(person.pPet->GetName() + " assignment");
 	return *this;		// TODO: so reference is same as dereferenced value?
 }
