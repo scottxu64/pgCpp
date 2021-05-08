@@ -784,6 +784,32 @@ void pgSmartPointer() {
 }	// no delete logic in destructor needed
 
 
+void pgPolyMorphysm() {
+	// prerequest for polymorphysm is using virtual keyword. if implemented as overwrite then when upcast extra members, functions will be sliced. 
+	// all below bahaviors applys to function call passing by reference or value
+
+	Worker worker = Chef("myname");
+	cout << worker.getName() << endl;			// "myname"; child class slicing when upcast, invoking parent's method. No polymorphysm for concrete instance
+	
+	Chef chef = Chef("myname2");
+	Worker& rChef = chef;
+	cout << rChef.getName() << endl;			// "chef myname2"; use reference, polymorphysm works
+	Worker* pChef = &chef;
+	cout << pChef->getName() << endl;			// "chef myname2"; use pointer, polymorphysm works
+	
+	Worker* pFreeStoreChef = new Chef("myname3");
+	cout << pFreeStoreChef->getName() << endl;	// "chef myname3"; use free store, polymorphysm works
+	delete pFreeStoreChef;
+
+	shared_ptr<Worker> spChef = make_shared<Chef>("myname4");
+	cout << spChef->getName() << endl;			// "chef myname4"; use smart pointer, polymorphysm works
+	spChef.reset();
+
+	// chef = worker;	  // this won't work. can't downcast parent to child
+	worker = chef;		  // chef getName() will be sliced
+}
+
+
 int main()
 {
 	//    pgPointer();
@@ -848,7 +874,9 @@ int main()
 	//pgFreeStore();
 	//pgFreeStoreAttachToLocalInstance();
 	//pgFreeStoreWithCopy();
-	pgSmartPointer();
+	//pgSmartPointer();
+
+	pgPolyMorphysm();
 
 	return 0;
 }

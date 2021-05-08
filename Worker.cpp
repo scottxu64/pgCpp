@@ -12,6 +12,10 @@ string Worker::getName() const{
     return _name;
 }
 
+string Worker::getCareer() {
+    return "";
+}
+
 void Worker::addPet(string petName)
 {
     pPet.reset();

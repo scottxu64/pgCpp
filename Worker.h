@@ -12,12 +12,12 @@ class Worker
     public:
         Worker() = default;
         Worker(std::string);        // always specify full namespace in header file
-        std::string getName() const;
+        virtual std::string getName() const;
 
-        virtual std::string getCareer() = 0;  // step1: =0 means this is a pure virtual function. means no implementation in Worker class
-                                         // or keep it as virtual but provide an default implementation: virtual string getCareer(){}, so if one child class has no implementation, this empty one will be executed.
-                                         // if we don't have virtual keyword at all, just declared a function here, then it is override, need to downcast
-
+        virtual std::string getCareer(); //=0  // step1: =0 means this is a pure virtual function. means no implementation in Worker class
+                                              // or keep it as virtual but provide an default implementation: virtual string getCareer(){}, so if one child class has no implementation, this empty one will be executed.
+                                              // if we don't have virtual keyword at all, just declared a function here, then it is overwrite. If saved as Worker object, child class's getCareer() will be sliced thus Worker's getCareer() is invoked.
+        // smart pointer
         void addPet(std::string);
         const std::string getPetName();
 

@@ -14,6 +14,8 @@ class Chef: public Worker
 
         Chef(string name, string career);   // variable name is optional but can help understand its purpose.
 
+        std::string getName() const;
+
         string getCareer(); // step2: declare function as usual
 
 private:
