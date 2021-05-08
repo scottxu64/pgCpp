@@ -334,7 +334,10 @@ void pgPolyMorphism()
 		<< ", my job is: " << pDriver->getCareer()
 		<< endl;
 
-	cout << static_cast<Chef*>(pDriver)->getCareer() << endl; // downcast. result is still "Driver"
+	cout << static_cast<Chef*>(pDriver)->getCareer() << endl; // result is still "Driver", as both driver and chef has getCareer()
+	
+	Person* pP = dynamic_cast<Person*>(pDriver);	// cast to a totally different class is not possbile for static_cast. dynamic_cast will return nullptr if can't cast
+	cout << (pP ? pP->getName() : "cast from Worker to Person failed") << endl;
 }
 
 // Function Template
@@ -876,7 +879,7 @@ int main()
 	//pgFreeStoreWithCopy();
 	//pgSmartPointer();
 
-	pgPolyMorphysm();
+	pgPolyMorphism();
 
 	return 0;
 }
