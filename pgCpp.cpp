@@ -4,6 +4,7 @@
 #include <string> // for string functions. won't need it for using string
 #include <vector>
 #include <algorithm>    // for vector operations
+#include <chrono>
 
 #include "Person.h"
 #include "Team.h"
@@ -13,6 +14,7 @@
 #include "Driver.h"
 
 #include "MyFreeStore.h"
+#include <list>
 
 using namespace std;
 
@@ -685,6 +687,37 @@ void pgVectorComparable()
 }
 
 
+// linked list
+template <typename Func>
+long long timeFunc(Func func, int size) {
+	auto begin = chrono::steady_clock::now();
+	func(size);
+	auto end = chrono::steady_clock::now();
+
+	return chrono::duration_cast<chrono::milliseconds>(end - begin).count();
+}
+
+void createList(int size) {
+	list<int> mylist;
+	for (int i = 0; i < size; i++) {
+		mylist.push_back((int)rand());
+	}
+}
+
+void pgList() {
+	cout << timeFunc(createList, 10'000) << endl;
+
+	// array: collection size never change
+	// vector: collection size auto grow or shrink. will make a copy every time add or remove
+	// list: collection size auto grow or shrink. need to traverse when looking up for certain element
+
+	// map: keys must be unique, elements are stored sorted
+	// multimap: allows collisions
+
+	// unordered_map, unordered_multimap ... and more
+}
+
+
 // cast
 void pgCast()
 {
@@ -813,6 +846,8 @@ void pgPolyMorphysm() {
 }
 
 
+
+
 int main()
 {
 	//    pgPointer();
@@ -879,7 +914,8 @@ int main()
 	//pgFreeStoreWithCopy();
 	//pgSmartPointer();
 
-	pgPolyMorphism();
+	//pgPolyMorphism();
+	pgList();
 
 	return 0;
 }
