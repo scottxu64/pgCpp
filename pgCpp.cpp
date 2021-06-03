@@ -845,7 +845,66 @@ void pgPolyMorphysm() {
 	worker = chef;		  // chef getName() will be sliced
 }
 
+// lambda
+bool isOdd(int number) {
+	return number % 2 != 0;
+}
 
+void pgLambda() {
+	vector<int> numbers { 2, 3, 4, -1, 1 };
+
+	{
+		int odd_count = std::count_if(begin(numbers), end(numbers), isOdd);
+		cout << "free method: " << odd_count << endl;
+	}
+
+	{
+		auto isOdd = [](int number) {	// [] capture clause; () parameters; {} body; auto is type of function, return return type
+			return number % 2 != 0;
+		};
+		int odd_count = std::count_if(begin(numbers), end(numbers), isOdd);
+		cout << "lambda expression: " << odd_count << endl;
+	}
+
+	{
+		auto isOdd = [](int number) -> bool {
+			return number % 2 != 0;
+		};
+		int odd_count = std::count_if(begin(numbers), end(numbers), isOdd);
+		cout << "lambda expression w return type: " << odd_count << endl;
+	}
+}
+
+void pgLambdaCaptures() {
+	vector<int> numbers{ 2, 3, 4, -1, 1 };
+	int x = 3;
+	int y = 7;
+	string message = "elements bwtween " + to_string(x) + " and " + to_string(y) + " inclusive:";
+
+	for_each(begin(numbers), end(numbers),
+		[x, y, &message](int n) {		// x, y will be copied value and const, message will be reference
+			if (n >= x && n <= y) {
+				message += (" " + to_string(n));
+			}
+		});
+	// for_each will only provide method with int n, to complete express, 
+	// extra variables are needed. They can be passed in via capture clause.
+	
+	// [ = ] means capture all var used in expressing, by value and const.
+	// [ & ] means capture all var used in expressing, by reference.
+	
+	// all captured values by default are const, which means you can't change value for x,
+	// or if &message is captured by value, this message += will not be mutable.
+
+
+	for_each(begin(numbers), end(numbers),
+		[&, x](int number) mutable {	// everything used are by reference, other than x, which is by value and const
+			x += number;
+			y += number;
+		});
+	// notice here x is passed by value and const, but still can be edited. because keyword `mutable` is used.
+	// changing x in expression won' change x varible outside. It is still a copy.
+}
 
 
 int main()
@@ -915,7 +974,10 @@ int main()
 	//pgSmartPointer();
 
 	//pgPolyMorphism();
-	pgList();
+	//pgList();
+
+	//pgLambda();
+	pgLambdaCaptures();
 
 	return 0;
 }
