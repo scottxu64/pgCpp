@@ -643,7 +643,7 @@ void pgVectorAlgorithm()
 
 	sort(begin(myVector), end(myVector));
 
-	for (auto i = begin(myVector); i != end(myVector); ++i) // another type of for loop. notice here `i` is pointer
+	for (auto i = begin(myVector); i != end(myVector); ++i) // iterator. notice here `i` is pointer
 	{
 		cout << *i << endl;
 	}
@@ -907,6 +907,96 @@ void pgLambdaCaptures() {
 }
 
 
+// container algorithm
+void pgContainerAlgorithm() {
+	vector <int> v;
+
+	// loop 
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			v.push_back(i);
+		}
+
+		for (int i = 0; i < 5;)
+		{
+			v.push_back(i++);
+		}
+
+		int i = 0;
+		generate_n(back_inserter(v), 5, [&]() {return i++;});
+	}
+
+	// sum
+	{
+		int total = 0;
+		for (int index = 0; index < 5; index++)
+		{
+			total += v[index];
+		}
+
+		for (int elem : v) {
+			total += elem;
+		}
+
+		//total = std::accumulate(begin(v), end(v), 0);	// since cpp 20
+	}
+
+	// count the number of 3
+	{
+		int count = 0;
+		for (unsigned int i = 0; i < v.size(); i++)
+		{
+			if (v[i] == 3) { count++; }
+		}
+
+		for (auto it = begin(v); it != end(v); it++) {
+			if (*it == 3) { count++; }
+		}
+
+		count = std::count(begin(v), end(v), 3);
+	}
+
+	// remove the number 3
+	{
+		// DO NOT USE THIS, wrong logic from video
+		/*for (unsigned int i = 0; i < v.size(); i++)
+		{
+			if (v[i] == 3) { v.erase(v.begin() + i); }
+		}*/
+
+		 //DO NOT DO THIS, when container content is changed, iterator will become invalid.
+		/*for (auto i = begin(v); i != end(v); i++)	
+		{
+			if (*i == 3) v.erase(i);
+		}*/
+
+		// notice: 
+		// remove_if does NOT simply removes an element, it moves up the rest of the vector to fill up the element to be removed.
+		// it also will leave old elements at the end intact.
+		// so we need to use the new end pointer to trim off those old vaules.
+		auto newEnd = std::remove_if(begin(v), end(v), [](int element) {return (element == 3);});
+		v.erase(newEnd, end(v));
+		//std::remove_if(begin(v), end(v), [](int element) {return (element == 3);}, end(v));	// since cpp 20
+	}
+
+	// use expression can adapt to different containers easily
+	{
+		list<int> l;
+		
+		int i = 0;
+		generate_n(back_inserter(i), 5, [&] {return i++;});
+
+		int count = std::count(begin(l), end(l), 3);	// count_if() supports lambda
+
+		auto newEnd = std::remove_if(begin(l), end(l), [](int element) {return (element == 3);});
+		l.erase(newEnd, end(l));
+
+		bool isAllPositive = std::all_of(begin(l), end(l), [](int element) {return element > 0;});
+	}
+}
+
+
 int main()
 {
 	//    pgPointer();
@@ -977,7 +1067,9 @@ int main()
 	//pgList();
 
 	//pgLambda();
-	pgLambdaCaptures();
+	//pgLambdaCaptures();
+
+	pgContainerAlgorithm();
 
 	return 0;
 }
