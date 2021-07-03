@@ -16,6 +16,7 @@
 #include "MyFreeStore.h"
 #include <list>
 
+
 using namespace std;
 
 // pointer
@@ -689,7 +690,7 @@ void pgVectorComparable()
 
 // linked list
 template <typename Func>
-long long timeFunc(Func func, int size) {
+long long timeFunc(Func func, int size) {	// this makes fn being passed as parameters, like in JS!
 	auto begin = chrono::steady_clock::now();
 	func(size);
 	auto end = chrono::steady_clock::now();
@@ -909,6 +910,7 @@ void pgLambdaCaptures() {
 
 // container algorithm
 void pgContainerAlgorithm() {
+
 	vector <int> v;
 
 	// loop 
@@ -985,9 +987,12 @@ void pgContainerAlgorithm() {
 		list<int> l;
 		
 		int i = 0;
-		generate_n(back_inserter(i), 5, [&] {return i++;});
+		generate_n(back_inserter(l), 5, [&] {return i++;});
 
 		int count = std::count(begin(l), end(l), 3);	// count_if() supports lambda
+		
+		auto pMax = max_element(begin(l), end(l));
+		auto maxValue = *pMax;
 
 		auto newEnd = std::remove_if(begin(l), end(l), [](int element) {return (element == 3);});
 		l.erase(newEnd, end(l));
@@ -996,6 +1001,107 @@ void pgContainerAlgorithm() {
 	}
 }
 
+// move
+template <typename MyFn>
+long long timeFn(MyFn fn)
+{
+	auto start = chrono::steady_clock::now();
+	fn();
+	auto end = chrono::steady_clock::now();
+	return chrono::duration_cast<chrono::milliseconds>(end - start).count();
+}
+
+class MyMoveClass {
+private:
+	std::string _fragment;
+public:
+	MyMoveClass()
+		:_fragment("fragment") {}
+
+	MyMoveClass(string fragment)
+	{
+		_fragment = fragment;
+	}
+
+	// copy constructor
+	MyMoveClass(const MyMoveClass& mmc)
+		:_fragment(mmc._fragment)
+	{
+		cout << "copy constructor called, move failed" << endl;
+	}
+
+	// move constructor
+	MyMoveClass(MyMoveClass&& mmc)
+		:_fragment(std::move(mmc._fragment))
+	{ }
+
+	// copy assignment
+	MyMoveClass& operator=(const MyMoveClass& mmc) {
+		if (this != &mmc)
+		{
+			_fragment = mmc._fragment;
+			cout << "copy assignment called, move failed" << endl;
+		}
+		return *this;
+	}
+
+	// move assignment
+	MyMoveClass& operator=(MyMoveClass&& mmc)
+	{
+		if (this != &mmc)
+		{
+			_fragment = std::move(mmc._fragment);
+			mmc._fragment.clear();	// disable small string optimization for demo purpose only
+		}
+		return *this;
+	}
+
+	// destructor will prevents implicit move assignment
+	//~MyMoveClass() { }
+	// TODO: with destructor:
+	//	fn1 uses copy-constructor
+	//	fn2 uses copy-constructor and move-constructor 
+};
+
+MyMoveClass& fn(MyMoveClass myMoveClass) {	 // trigger move-constructor
+	return myMoveClass;
+}
+
+MyMoveClass fn2(MyMoveClass myMoveClass) {	 // trigger move-constructor, move-assignment
+	return myMoveClass;
+}
+
+MyMoveClass& fn3(MyMoveClass& myMoveClass) { // trigger nothing
+	return myMoveClass;
+}
+
+class MyMoveClass2 : MyMoveClass
+{
+	string _fragment2;
+	
+};
+
+void runMoveManyTimes() {
+	MyMoveClass myMoveClass("dummy string");
+	for (int i = 0; i < 100; i++) {
+		myMoveClass = MyMoveClass("another dummy string rvalue" + to_string(i));
+		// or
+		MyMoveClass mmc2 = MyMoveClass("another dummy string xvalue " + to_string(i));
+		myMoveClass = std::move(mmc2);
+	}
+}
+
+void pgMove() {
+	MyMoveClass mmc, mmc2;
+	mmc= MyMoveClass("dummy string rvalue");	// move-assignment from rvalue temporary
+	mmc2 = std::move(mmc);				// move-assignment from xvalue temporary
+
+	fn(mmc2);							// implicit move-constructor
+	fn2(mmc);							// move-constructor, move-assignment
+	fn3(mmc);							// no move
+
+	cout << timeFn(runMoveManyTimes) << endl;
+}
 
 int main()
 {
@@ -1069,7 +1175,9 @@ int main()
 	//pgLambda();
 	//pgLambdaCaptures();
 
-	pgContainerAlgorithm();
+	//pgContainerAlgorithm();
+
+	pgMove();
 
 	return 0;
 }
