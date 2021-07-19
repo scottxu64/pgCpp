@@ -1011,6 +1011,7 @@ long long timeFn(MyFn fn)
 	return chrono::duration_cast<chrono::milliseconds>(end - start).count();
 }
 
+// https://en.cppreference.com/w/cpp/language/move_assignment
 class MyMoveClass {
 private:
 	std::string _fragment;
@@ -1019,9 +1020,7 @@ public:
 		:_fragment("fragment") {}
 
 	MyMoveClass(string fragment)
-	{
-		_fragment = fragment;
-	}
+		:_fragment(fragment) {}
 
 	// copy constructor
 	MyMoveClass(const MyMoveClass& mmc)
@@ -1086,8 +1085,8 @@ void runMoveManyTimes() {
 	for (int i = 0; i < 100; i++) {
 		myMoveClass = MyMoveClass("another dummy string rvalue" + to_string(i));
 		// or
-		MyMoveClass mmc2 = MyMoveClass("another dummy string xvalue " + to_string(i));
-		myMoveClass = std::move(mmc2);
+		MyMoveClass mmc2 = MyMoveClass("another dummy string xvalue " + to_string(i));	// mmc is lvalue, which can get pointer address, which is not a transient variable.
+		myMoveClass = std::move(mmc2);	// std::move() cast lvalue to rvalue, so compiler will choose move assignment over copy assignment, when =
 	}
 }
 
