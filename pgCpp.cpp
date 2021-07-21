@@ -1102,6 +1102,45 @@ void pgMove() {
 	cout << timeFn(runMoveManyTimes) << endl;
 }
 
+// exception
+void pgExceptions() {
+	vector<int> v;
+	v.push_back(1);
+	try
+	{
+		throw invalid_argument("an error message string");
+		v.at(99);
+	}
+	catch (const out_of_range& e)
+	{
+		cout << "out_of_range catched: " << e.what() << endl;
+	}
+	catch (const exception& e) {	// if use `exception e` it will slice/cast to base exception class, and lose error type. use exception& reference here can have full info.
+		cout << "all catch: " << e.what() << endl;
+	}
+}
+
+void pgExceptionRAII(){
+	try
+	{
+		//auto x = new Person();
+		//throw exception("my exception");
+		//delete x;		// this will not be called, thus memory leak. put it in destructor if really needed.
+
+		auto x = make_unique<Person>();		// use RAII to avoid leak: https://stackoverflow.com/questions/37514509/advantages-of-using-stdmake-unique-over-new-operator
+		throw exception("my exception");
+	}
+	catch (const std::exception& e)
+	{
+	}
+}
+
+void pgNoexception() {	// when noexcept function throw, app ends. no catch no stack unwinding
+						// some move functions requires noexception, otherwise will end up with copy
+
+}
+
+
 int main()
 {
 	//    pgPointer();
@@ -1176,7 +1215,9 @@ int main()
 
 	//pgContainerAlgorithm();
 
-	pgMove();
+	//pgMove();
+
+	pgExceptions();
 
 	return 0;
 }
